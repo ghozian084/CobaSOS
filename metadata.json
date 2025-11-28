@@ -1,0 +1,5 @@
+{
+  "name": "V2 SOS Poster Meta Data Extractor",
+  "description": "Extract structured metadata from competition posters using AI, with calendar integration and broadcast message generation.",
+  "requestFramePermissions": []
+}
