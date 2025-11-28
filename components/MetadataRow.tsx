@@ -21,7 +21,7 @@ const MetadataRow: React.FC<MetadataRowProps> = ({ fieldKey, value, onUpdate, on
   const isMultiline = fieldKey === 'broadcastMessage';
 
   return (
-    <div className="group relative bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
+    <div className={`group relative bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200 ${isMultiline ? 'row-span-2' : ''}`}>
       <div className="flex justify-between items-start mb-2">
         <label className="block text-sm font-medium text-gray-500 uppercase tracking-wider">
           {LABELS[fieldKey]}
@@ -63,8 +63,8 @@ const MetadataRow: React.FC<MetadataRowProps> = ({ fieldKey, value, onUpdate, on
           value={value}
           onChange={(e) => onUpdate(fieldKey, e.target.value)}
           rows={6}
-          className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md p-3 focus:ring-2 focus:ring-primary-500 focus:bg-white transition-colors resize-y leading-relaxed min-h-[160px]"
-          placeholder="Pesan broadcast akan muncul di sini..."
+          className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md p-3 focus:ring-2 focus:ring-primary-500 focus:bg-white transition-colors resize-y leading-relaxed min-h-[160px] font-sans whitespace-pre-wrap"
+          placeholder="Pesan broadcast akan muncul di sini... (Klik tombol refresh jika kosong)"
         />
       ) : (
         <input

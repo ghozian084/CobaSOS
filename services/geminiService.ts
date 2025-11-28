@@ -1,6 +1,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { PosterMetadata, MetadataKey, LABELS } from "../types";
 
+// Access environment variable using process.env.API_KEY as per guidelines
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 // Helper to convert file to base64
@@ -27,7 +28,13 @@ export const extractMetadata = async (base64Image: string): Promise<PosterMetada
     
     Untuk 'registrationDeadlineIso' dan 'eventDateIso', cobalah konversi tanggal ke format YYYYMMDD (contoh: 20241231). Jika rentang tanggal, ambil tanggal mulai. Jika tidak ada tanggal, kosongkan string.
     
-    Untuk 'broadcastMessage', buatlah narasi singkat menarik yang merangkum lomba, cocok untuk disebar di WhatsApp/Line. Gunakan banyak emoji yang relevan agar pesan terlihat eye-catching dan seru (Contoh: 🏆, 📅, 📍, 🔥).
+    Untuk 'broadcastMessage', buatlah narasi broadcast/caption yang SANGAT MENARIK, LENGKAP, dan PENUH EMOJI untuk disebar di WhatsApp/Line/Instagram.
+    Struktur pesan broadcast:
+    - Judul yang heboh (pakai emoji 🔥🏆)
+    - Poin-poin benefit (pakai emoji ✅)
+    - Tanggal penting (pakai emoji 📅)
+    - Call to Action yang kuat (pakai emoji 🚀)
+    Pastikan pesannya rapi dan enak dibaca.
     
     Untuk 'location', jika Status Lomba adalah 'Luring' atau 'Hybrid', sebutkan Kotanya. Jika 'Daring', tulis 'Daring'.
   `;
@@ -55,7 +62,7 @@ export const extractMetadata = async (base64Image: string): Promise<PosterMetada
           teamType: { type: Type.STRING, enum: ["Individu", "Kelompok", "Individu/Kelompok", "Tidak Diketahui"] },
           status: { type: Type.STRING, enum: ["Daring", "Luring", "Hybrid", "Tidak Diketahui"] },
           location: { type: Type.STRING, description: "Kota pelaksanaan atau 'Daring'" },
-          broadcastMessage: { type: Type.STRING, description: "Rangkuman promosi lomba untuk broadcast message dengan emoji" },
+          broadcastMessage: { type: Type.STRING, description: "Pesan broadcast yang menarik, panjang, dan penuh emoji" },
           link: { type: Type.STRING, description: "Link pendaftaran, guidebook, atau social media" },
         },
         required: ["competitionName", "category", "status", "broadcastMessage"],
@@ -85,8 +92,10 @@ export const reanalyzeSingleField = async (base64Image: string, fieldKey: Metada
       Nilai saat ini yang terdeteksi adalah: "${currentData[fieldKey]}".
       
       Tolong analisis ulang gambar dengan sangat teliti untuk menemukan '${fieldLabel}' yang benar.
-      Jika ini adalah 'broadcastMessage', buat ulang pesan yang lebih menarik, gunakan bahasa marketing yang seru, dan sertakan banyak emoji yang relevan.
-      Jika ini adalah tanggal, pastikan formatnya benar.
+      
+      KHUSUS jika field ini adalah 'broadcastMessage':
+      Buat pesan broadcast yang LEBIH MENARIK, LEBIH PANJANG, dan gunakan BANYAK EMOJI (🔥, 📅, 📍, 🏆, ✨, 🚀).
+      Gunakan gaya bahasa copywriting yang mengajak orang untuk segera mendaftar.
       
       Kembalikan HANYA teks hasil perbaikan tanpa format JSON atau markdown tambahan.
       Jika nilai sudah benar atau tidak ditemukan info lain, kembalikan nilai yang sama.
