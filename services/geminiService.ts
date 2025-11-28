@@ -1,6 +1,13 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { PosterMetadata, MetadataKey, LABELS } from "../types";
 
+// Declare process to avoid TypeScript errors during build if @types/node isn't picked up immediately
+declare const process: {
+  env: {
+    API_KEY: string;
+  };
+};
+
 // Access environment variable using process.env.API_KEY as per guidelines
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 

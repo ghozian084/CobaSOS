@@ -1,25 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Header from './components/Header';
 import FileUpload from './components/FileUpload';
 import MetadataRow from './components/MetadataRow';
 import CalendarLinks from './components/CalendarLinks';
 import { extractMetadata, reanalyzeSingleField, fileToBase64 } from './services/geminiService';
 import { PosterMetadata, MetadataKey } from './types';
-
-const INITIAL_METADATA: PosterMetadata = {
-  competitionName: '',
-  category: '',
-  registrationDeadline: '',
-  registrationDeadlineIso: '',
-  eventDate: '',
-  eventDateIso: '',
-  cost: '',
-  teamType: '',
-  status: '',
-  location: '',
-  broadcastMessage: '',
-  link: ''
-};
 
 const DISPLAY_KEYS: MetadataKey[] = [
   'competitionName',
@@ -35,7 +20,7 @@ const DISPLAY_KEYS: MetadataKey[] = [
 ];
 
 function App() {
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  // Removed imageFile state as it was unused
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageBase64, setImageBase64] = useState<string | null>(null);
   
@@ -46,7 +31,6 @@ function App() {
   const [refreshingField, setRefreshingField] = useState<MetadataKey | null>(null);
 
   const handleFileSelect = useCallback(async (file: File) => {
-    setImageFile(file);
     setError(null);
     setMetadata(null);
     setLoading(true);
